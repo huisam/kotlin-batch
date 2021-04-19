@@ -23,4 +23,21 @@ class Team(
         this.members.add(member)
         member.team = this
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Team) return false
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id?.hashCode() ?: 0
+    }
+
+    override fun toString(): String {
+        return "Team(id=$id, name='$name', rank=$rank)"
+    }
 }

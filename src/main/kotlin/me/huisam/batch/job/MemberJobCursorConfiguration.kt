@@ -9,7 +9,6 @@ import org.springframework.batch.core.configuration.annotation.JobScope
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepScope
 import org.springframework.batch.item.ItemProcessor
-import org.springframework.batch.item.ItemReader
 import org.springframework.batch.item.database.JpaCursorItemReader
 import org.springframework.batch.item.database.JpaItemWriter
 import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilder
@@ -21,7 +20,7 @@ import java.util.*
 import javax.persistence.EntityManagerFactory
 
 @Configuration
-class MemberJobConfiguration(
+class MemberJobCursorConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
     private val entityManagerFactory: EntityManagerFactory,
@@ -57,13 +56,14 @@ class MemberJobConfiguration(
         @Value("#{jobParameters[address]}") address: String? = null,
     ): ItemProcessor<Member, Member> {
         return ItemProcessor {
+            logger.info("before Processing, $it")
             Member(
                 id = it.id,
                 name = it.name,
                 address = address!!,
                 age = it.age,
                 team = it.team
-            ).also { logger.info("$it") }
+            ).also { member -> logger.info("After Processing = $member") }
         }
     }
 

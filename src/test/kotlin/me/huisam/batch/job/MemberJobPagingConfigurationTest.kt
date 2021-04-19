@@ -9,13 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest
 import java.util.*
 
 
-@SpringBootTest(classes = [MemberJobConfiguration::class])
-internal class MemberJobConfigurationTest : BaseBatchJobTest() {
+@SpringBootTest(classes = [MemberJobPagingConfiguration::class])
+internal class MemberJobPagingConfigurationTest : BaseBatchJobTest() {
     @Test
-    fun `address를 성공적으로 변환한다`() {
+    fun `name을 성공적으로 변환한다`() {
         // given
         val jobParameters = JobParametersBuilder()
-            .addString("address", "Busan")
+            .addString("name", "afterTest")
             .addDate("requestedAt", Date())
             .toJobParameters()
 
@@ -27,7 +27,7 @@ internal class MemberJobConfigurationTest : BaseBatchJobTest() {
         val members = memberRepository.findAll()
         assertThat(members)
             .filteredOn { it.age >= 13 }
-            .allSatisfy { assertThat(it.address).isEqualTo("Busan") }
+            .allSatisfy { assertThat(it.name).isEqualTo("afterTest") }
     }
 
 }
