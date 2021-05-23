@@ -29,30 +29,30 @@ class MemberJobPagingConfiguration(
     private val logger = LoggerFactory.getLogger("memberJob")
 
     @Bean
-    fun addressChangeJob(): Job = jobBuilderFactory.get("addressChangeJobPaging")
-        .start(addressChangeStep())
+    fun addressChangeJobPaging(): Job = jobBuilderFactory.get("addressChangeJobPaging")
+        .start(addressChangeStepPaging())
         .build()
 
     @Bean
     @JobScope
-    fun addressChangeStep(
+    fun addressChangeStepPaging(
         @Value("#{jobParameters[requestedAt]}") requestedAt: Date? = null,
     ): Step = stepBuilderFactory.get("addressChangeStepPaging")
         .chunk<Member, Member>(chunkSize)
         .reader(jpaPagingMemberItemReader())
-        .processor(jpaMemberProcessor())
-        .writer(jpaMemberItemWriter())
+        .processor(jpaMemberProcessorPaging())
+        .writer(jpaMemberItemWriterPaging())
         .build()
 
     @Bean
-    fun jpaMemberItemWriter(): JpaItemWriter<in Member> = JpaItemWriterBuilder<Member>()
+    fun jpaMemberItemWriterPaging(): JpaItemWriter<in Member> = JpaItemWriterBuilder<Member>()
         .entityManagerFactory(entityManagerFactory)
         .usePersist(false)
         .build()
 
     @Bean
     @StepScope
-    fun jpaMemberProcessor(
+    fun jpaMemberProcessorPaging(
         @Value("#{jobParameters[name]}") name: String? = null,
     ): ItemProcessor<Member, Member> {
         return ItemProcessor {
