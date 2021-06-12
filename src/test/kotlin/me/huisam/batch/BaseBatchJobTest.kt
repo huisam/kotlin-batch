@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
 import javax.persistence.EntityManagerFactory
 
-@Import(TestBatchConfig::class)
+@Import(TestBatchConfiguration::class)
 @SpringBatchTest
 abstract class BaseBatchJobTest {
     @Autowired

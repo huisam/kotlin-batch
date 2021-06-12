@@ -1,5 +1,6 @@
 package me.huisam.batch.entity
 
+import me.huisam.batch.entity.date.AuditableDate
 import javax.persistence.*
 
 @Entity
@@ -22,7 +23,7 @@ class Member(
     @ManyToOne
     @JoinColumn(name = "team_id")
     var team: Team? = null,
-) {
+) : AuditableDate() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Member) return false
