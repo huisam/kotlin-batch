@@ -9,9 +9,11 @@ spring:
       ddl-auto: create
     properties:
       hibernate.format_sql: true
+      check_nullablity: true
     show-sql: true
 
 
-logging.level.org.hibernate:
-  SQL: INFO
-
+logging.level:
+  org.hibernate:
+    type: trace
+    SQL: debug
