@@ -1,24 +1,29 @@
 package me.huisam.batch.entity
 
 import me.huisam.batch.entity.date.AuditableDate
+import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table
+@Table(name = "member_table")
 class Member(
     @Id
     @GeneratedValue
     @Column(name = "member_id")
     val id: Long? = null,
 
-    @Column
+    @Column(name = "name")
     val name: String,
 
-    @Column
+    @Column(name = "address")
     val address: String,
 
-    @Column
+    @Column(name = "age")
     val age: Long,
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dormant")
+    var status: MemberStatus = MemberStatus.ACTIVE,
 
     @ManyToOne
     @JoinColumn(name = "team_id")
@@ -33,11 +38,13 @@ class Member(
         return true
     }
 
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
+    override fun hashCode() = Objects.hashCode(id)
 
     override fun toString(): String {
-        return "Member(id=$id, name='$name', address='$address', age=$age, team=$team)"
+        return "Member(id=$id, name='$name', address='$address', age=$age, team=${team?.id})"
     }
+}
+
+enum class MemberStatus {
+    ACTIVE, DORMANT
 }
