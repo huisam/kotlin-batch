@@ -37,6 +37,16 @@ abstract class BaseBatchJobTest {
         return entities
     }
 
+    protected fun <T> mergeAll(entities: List<T>): List<T> {
+        entityManager.transaction.also {
+            it.begin()
+            entities.forEach { entity -> entityManager.merge(entity) }
+            it.commit()
+            entityManager.clear()
+        }
+        return entities
+    }
+
     protected fun deleteAll(tableName: String) {
         entityManager.transaction.also {
             it.begin()
