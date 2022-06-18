@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.7.0"
     kotlin("plugin.jpa") version "1.7.0"
-    kotlin("kapt") version "1.6.10"
+    kotlin("kapt") version "1.7.0"
 }
 
 group = "me.huisam"
